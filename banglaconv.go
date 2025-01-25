@@ -136,6 +136,11 @@ func (nc *NumConverter) ToBengaliNumber(numericText interface{}) string {
 	return replaceDigits(str)
 }
 
+/**
+ * ToBengaliWord converts a number to its Bengali word representation.
+ * It accepts various numeric types (int, float, string) as input.
+ * Returns the Bengali word equivalent and an error if conversion fails.
+ */
 func (nc *NumConverter) ToBengaliWord(number interface{}) (string, error) {
 	num, err := convertToFloat64(number)
 	if err != nil {
@@ -152,9 +157,6 @@ func (nc *NumConverter) ToBengaliWord(number interface{}) (string, error) {
 	integerWords := integerToWords(integerPart)
 
 	if isFloat {
-		// fractionPart = strings.TrimPrefix(fmt.Sprintf("%.10f", num-float64(integerPart))[2:], "0")
-		// fractionWords := convertFractionToWords(fractionPart)
-		// return fmt.Sprintf("%s দশমিক %s", integerWords, fractionWords), nil
 		fractionStr := fmt.Sprintf("%.10f", num)
 		parts := strings.Split(fractionStr, ".")
 		if len(parts) == 2 {
@@ -230,9 +232,9 @@ func integerToWords(num int) string {
 	}
 
 	if num >= 100000 {
-		lakh := num / 100000
-		if lakh > 0 {
-			words = append(words, fmt.Sprintf("%s লক্ষ", integerToWords(lakh)))
+		lac := num / 100000
+		if lac > 0 {
+			words = append(words, fmt.Sprintf("%s লক্ষ", integerToWords(lac)))
 		}
 		num %= 100000
 	}
@@ -246,9 +248,9 @@ func integerToWords(num int) string {
 	}
 
 	if num >= 100 {
-		sotok := num / 100
-		if sotok > 0 {
-			words = append(words, fmt.Sprintf("%sশ", integerToWords(sotok)))
+		hundred := num / 100
+		if hundred > 0 {
+			words = append(words, fmt.Sprintf("%sশ", integerToWords(hundred)))
 		}
 		num %= 100
 	}
