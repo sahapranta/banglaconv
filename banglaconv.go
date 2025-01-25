@@ -72,7 +72,7 @@ var numericWords = map[string]string{
 	"42":  "বিয়াল্লিশ",
 	"43":  "তেতাল্লিশ",
 	"44":  "চুয়াল্লিশ",
-	"45":  "পঁয়তাল্লিশ",
+	"45":  "পঁয়তাল্লিশ",
 	"46":  "ছেচল্লিশ",
 	"47":  "সাতচল্লিশ",
 	"48":  "আটচল্লিশ",
@@ -209,10 +209,18 @@ func replaceDigits(str string) string {
 }
 
 func convertFractionToWords(fraction string) string {
+	frac := strings.TrimLeft(fraction, "0")
+
+	if frac == "" {
+		return ""
+	}
+
 	var words []string
+
 	for _, digit := range fraction {
 		words = append(words, numericWords[string(digit)])
 	}
+
 	return strings.TrimSpace(strings.Join(words, " "))
 }
 
