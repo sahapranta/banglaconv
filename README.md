@@ -2,7 +2,7 @@
 [![GoDoc](https://godoc.org/github.com/sahapranta/banglaconv?status.svg)](https://godoc.org/github.com/sahapranta/banglaconv)
 [![Go Report Card](https://goreportcard.com/badge/github.com/sahapranta/banglaconv)](https://goreportcard.com/report/github.com/sahapranta/banglaconv)
 ![Build workflow](https://github.com/sahapranta/banglaconv/actions/workflows/go.yml/badge.svg)
-[![codecov](https://codecov.io/gh/sahapranta/banglaconv/branch/main/graph/badge.svg)](https://codecov.io/gh/sahapranta/banglaconv)
+[![Codecov](https://codecov.io/gh/sahapranta/banglaconv/branch/main/graph/badge.svg)](https://codecov.io/gh/sahapranta/banglaconv)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A Go library for converting numbers to Bengali words and Bengali numerals.
@@ -39,11 +39,14 @@ func main() {
 
     // Convert to Bengali words
     bengaliWord, _ := converter.ToBengaliWord(1234567)
-    fmt.Println(bengaliWord)  // Output: বার লক্ষ চৌত্রিশ হাজার পাঁচশত সাতষট্টি
+    fmt.Println(bengaliWord)  // Output: বার লক্ষ চৌত্রিশ হাজার পাঁচশ সাতষট্টি
 
     // Works with floating-point numbers
     floatWord, _ := converter.ToBengaliWord(1234.56)
-    fmt.Println(floatWord)  // Output: এক হাজার দুইশত চৌত্রিশ দশমিক পাঁচ ছয়
+    fmt.Println(floatWord)  // Output: এক হাজার দুইশ চৌত্রিশ দশমিক পাঁচ ছয়
+
+    word, _ := converter.ToBengaliWord(0.05)
+    fmt.Println(word)  //Output: শূন্য দশমিক শূন্য পাঁচ
 }
 ```
 
