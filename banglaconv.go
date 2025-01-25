@@ -17,6 +17,7 @@ var digitMap = map[string]string{
 
 var numericWords = map[string]string{
 	".":   "দশমিক",
+	"0":   "শূন্য",
 	"00":  "",
 	"1":   "এক",
 	"01":  "এক",
@@ -126,16 +127,8 @@ var numericWords = map[string]string{
 	"97":  "সাতানব্বই",
 	"98":  "আটানব্বই",
 	"99":  "নিরানব্বই",
-	"100": "একশত",
+	"100": "একশ",
 }
-
-// var units = map[string]string{
-// 	"koti":   "কোটি",
-// 	"lokkho": "লক্ষ",
-// 	"hazar":  "হাজার",
-// 	"sotok":  "শত",
-// 	"ekok":   "",
-// }
 
 // ToBengaliNumber converts English numerals to Bengali numerals
 func (nc *NumConverter) ToBengaliNumber(numericText interface{}) string {
@@ -150,17 +143,26 @@ func (nc *NumConverter) ToBengaliWord(number interface{}) (string, error) {
 	}
 
 	if num == 0 {
-		return "শুন্য", nil
+		return "শূন্য", nil
 	}
 
 	isFloat := num != math.Floor(num)
 	var fractionPart string
-	// Separate integer and fraction parts precisely
 	integerPart := int(num)
 	integerWords := integerToWords(integerPart)
 
 	if isFloat {
-		fractionPart = strings.TrimPrefix(fmt.Sprintf("%.10f", num-float64(integerPart))[2:], "0")
+		// fractionPart = strings.TrimPrefix(fmt.Sprintf("%.10f", num-float64(integerPart))[2:], "0")
+		// fractionWords := convertFractionToWords(fractionPart)
+		// return fmt.Sprintf("%s দশমিক %s", integerWords, fractionWords), nil
+		fractionStr := fmt.Sprintf("%.10f", num)
+		parts := strings.Split(fractionStr, ".")
+		if len(parts) == 2 {
+			fractionPart = strings.TrimRight(parts[1], "0")
+			if fractionPart == "" {
+				fractionPart = "0"
+			}
+		}
 		fractionWords := convertFractionToWords(fractionPart)
 		return fmt.Sprintf("%s দশমিক %s", integerWords, fractionWords), nil
 	}
@@ -205,15 +207,6 @@ func replaceDigits(str string) string {
 }
 
 func convertFractionToWords(fraction string) string {
-	// var words []string
-	// for _, digit := range fraction {
-	// 	if digit == '0' {
-	// 		words = append(words, "শুন্য")
-	// 	} else {
-	// 		words = append(words, numericWords[string(digit)])
-	// 	}
-	// }
-	// return strings.Join(words, " ")
 	var words []string
 	for _, digit := range fraction {
 		words = append(words, numericWords[string(digit)])
@@ -221,14 +214,9 @@ func convertFractionToWords(fraction string) string {
 	return strings.TrimSpace(strings.Join(words, " "))
 }
 
-// func convertIntegerToWords(numStr string) string {
-// 	num, _ := convertToFloat64(numStr)
-// 	return integerToWords(int(num))
-// }
-
 func integerToWords(num int) string {
 	if num == 0 {
-		return "শুন্য"
+		return "শূন্য"
 	}
 
 	words := []string{}
@@ -260,14 +248,11 @@ func integerToWords(num int) string {
 	if num >= 100 {
 		sotok := num / 100
 		if sotok > 0 {
-			words = append(words, fmt.Sprintf("%sশত", integerToWords(sotok)))
+			words = append(words, fmt.Sprintf("%sশ", integerToWords(sotok)))
 		}
 		num %= 100
 	}
 
-	// if num > 0 {
-	// 	words = append(words, parseRemainingNumber(num))
-	// }
 	if num > 0 {
 		words = append(words, parseRemainingNumber(num))
 	}
