@@ -1,4 +1,9 @@
-# Bengali Number Converter (bangla-number)
+# Bengali Number Converter (banglaconv)
+[![GoDoc](https://godoc.org/github.com/sahapranta/banglaconv?status.svg)](https://godoc.org/github.com/sahapranta/banglaconv)
+[![Go Report Card](https://goreportcard.com/badge/github.com/sahapranta/banglaconv)](https://goreportcard.com/report/github.com/sahapranta/banglaconv)
+![Build workflow](https://github.com/sahapranta/banglaconv/actions/workflows/go.yml/badge.svg)
+[![codecov](https://codecov.io/gh/sahapranta/banglaconv/branch/main/graph/badge.svg)](https://codecov.io/gh/sahapranta/banglaconv)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A Go library for converting numbers to Bengali words and Bengali numerals.
 
@@ -12,7 +17,7 @@ A Go library for converting numbers to Bengali words and Bengali numerals.
 ## Installation
 
 ```bash
-go get github.com/sahapranta/bangla-number
+go get github.com/sahapranta/banglaconv
 ```
 
 ## Usage
@@ -22,7 +27,7 @@ package main
 
 import (
     "fmt"
-    "github.com/sahapranta/bangla-number"
+    "github.com/sahapranta/banglaconv"
 )
 
 func main() {
@@ -41,6 +46,9 @@ func main() {
     fmt.Println(floatWord)  // Output: এক হাজার দুইশত চৌত্রিশ দশমিক পাঁচ ছয়
 }
 ```
+
+## Documentation
+Visit the [GoDoc](https://godoc.org/github.com/sahapranta/banglaconv) page for the full documentation.
 
 ## Testing
 
