@@ -1,0 +1,17 @@
+name: Publish Go Module
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  check-go-module:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish Go Module
+        env:
+          MODULE_NAME: "github.com/sahapranta/banglaconv"
+          VERSION: ${{ github.event.release.tag_name }}
+        run: |
+          echo "Checking Go module: $MODULE_NAME@$VERSION"
+          GOPROXY=proxy.golang.org go list -m "$MODULE_NAME@$VERSION"
