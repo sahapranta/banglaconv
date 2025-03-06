@@ -31,21 +31,19 @@ import (
 )
 
 func main() {
-    converter := &bengaliconv.NumConverter{}
-
     // Convert to Bengali numerals
-    bengaliNum := converter.ToBengaliNumber(1234)
+    bengaliNum := banglaconv.ToBengaliNumber(1234)
     fmt.Println(bengaliNum)  // Output: ১২৩৪
 
     // Convert to Bengali words
-    bengaliWord, _ := converter.ToBengaliWord(1234567)
+    bengaliWord, _ := banglaconv.ToBengaliWord(1234567)
     fmt.Println(bengaliWord)  // Output: বার লক্ষ চৌত্রিশ হাজার পাঁচশ সাতষট্টি
 
     // Works with floating-point numbers
-    floatWord, _ := converter.ToBengaliWord(1234.56)
+    floatWord, _ := banglaconv.ToBengaliWord(1234.56)
     fmt.Println(floatWord)  // Output: এক হাজার দুইশ চৌত্রিশ দশমিক পাঁচ ছয়
 
-    word, _ := converter.ToBengaliWord(0.05)
+    word, _ := banglaconv.ToBengaliWord(0.05)
     fmt.Println(word)  //Output: শূন্য দশমিক শূন্য পাঁচ
 }
 ```
@@ -73,4 +71,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-[MIT License](https://github.com/sahapranta)
+[MIT License](https://github.com/sahapranta/banglaconv/blob/main/LICENSE)
