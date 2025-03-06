@@ -6,9 +6,6 @@ import (
 	"strings"
 )
 
-// NumConverter provides methods for converting numbers to Bengali representations
-type NumConverter struct{}
-
 var digitMap = map[string]string{
 	"1": "১", "2": "২", "3": "৩", "4": "৪",
 	"5": "৫", "6": "৬", "7": "৭", "8": "৮",
@@ -131,7 +128,7 @@ var numericWords = map[string]string{
 }
 
 // ToBengaliNumber converts English numerals to Bengali numerals
-func (nc *NumConverter) ToBengaliNumber(numericText interface{}) string {
+func ToBengaliNumber(numericText interface{}) string {
 	str := fmt.Sprintf("%v", numericText)
 	return replaceDigits(str)
 }
@@ -141,7 +138,7 @@ func (nc *NumConverter) ToBengaliNumber(numericText interface{}) string {
  * It accepts various numeric types (int, float, string) as input.
  * Returns the Bengali word equivalent and an error if conversion fails.
  */
-func (nc *NumConverter) ToBengaliWord(number interface{}) (string, error) {
+func ToBengaliWord(number interface{}) (string, error) {
 	num, err := convertToFloat64(number)
 	if err != nil {
 		return "", err
