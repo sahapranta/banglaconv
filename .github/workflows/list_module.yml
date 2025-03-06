@@ -1,4 +1,4 @@
-name: Publish Go Module
+name: Go Mod
 
 on:
   release:

@@ -4,6 +4,9 @@
 ![Build workflow](https://github.com/sahapranta/banglaconv/actions/workflows/go.yml/badge.svg)
 [![Codecov](https://codecov.io/gh/sahapranta/banglaconv/branch/main/graph/badge.svg)](https://codecov.io/gh/sahapranta/banglaconv)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Go Mod](https://github.com/sahapranta/banglaconv/actions/workflows/list_module.yml/badge.svg)](https://github.com/sahapranta/banglaconv/actions/workflows/list_module.yml)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/tag/sahapranta/banglaconv?sort=semver)
+
 
 A Go library for converting numbers to Bengali words and Bengali numerals.
 
