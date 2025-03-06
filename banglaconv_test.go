@@ -62,14 +62,38 @@ func TestInvalidInput(t *testing.T) {
 	}
 }
 
+func TestToBengaliNumberEdgeCases(t *testing.T) {
+	testCases := []struct {
+		input    interface{}
+		expected string
+	}{
+		{-1234, "-১২৩৪"},
+		{uint(789), "৭৮৯"},
+		{"000123", "১২৩"},
+		{"", ""},
+		{nil, ""},
+	}
+
+	for _, tc := range testCases {
+		t.Run(fmt.Sprintf("Convert %v", tc.input), func(t *testing.T) {
+			result := ToBengaliNumber(tc.input)
+			if result != tc.expected {
+				t.Errorf("Expected %s, got %s", tc.expected, result)
+			}
+		})
+	}
+}
+
 func TestConvertFractionToWords(t *testing.T) {
 	testCases := []struct {
 		input    string
 		expected string
 	}{
+		{"-123", "এক দুই তিন"},
 		{"123", "এক দুই তিন"},
 		{"000", ""},
 		{"001", "শূন্য শূন্য এক"},
+		{"0.0001", "শূন্য দশমিক শূন্য শূন্য শূন্য এক"},
 	}
 
 	for _, tc := range testCases {
@@ -117,6 +141,36 @@ func TestConvertToFloat64(t *testing.T) {
 	}
 }
 
+func TestToBengaliWordEdgeCases(t *testing.T) {
+	testCases := []struct {
+		input    interface{}
+		expected string
+	}{
+		{-1, "ঋণাত্মক এক"},
+		{-123, "ঋণাত্মক একশ তেইশ"},
+		{0.0001, "শূন্য দশমিক শূন্য শূন্য শূন্য এক"},
+		{0.000, "শূন্য"},
+		{123.00, "একশ তেইশ"},
+		{12300000, "এক কোটি তেইশ লক্ষ"},
+		{"000123", "একশ তেইশ"},
+		{"", ""},
+		{nil, ""},
+	}
+
+	for _, tc := range testCases {
+		t.Run(fmt.Sprintf("Convert %v", tc.input), func(t *testing.T) {
+			result, err := ToBengaliWord(tc.input)
+			if err != nil {
+				t.Errorf("Unexpected error: %v", err)
+			}
+
+			if result != tc.expected {
+				t.Errorf("Expected %s, got %s", tc.expected, result)
+			}
+		})
+	}
+}
+
 func TestParseRemainingNumber(t *testing.T) {
 	testCases := []struct {
 		input    int
@@ -127,6 +181,8 @@ func TestParseRemainingNumber(t *testing.T) {
 		{25, "পঁচিশ"},
 		{34, "চৌত্রিশ"},
 		{45, "পঁয়তাল্লিশ"},
+		{451, "এক"},
+		{450, ""},
 	}
 
 	for _, tc := range testCases {
@@ -156,6 +212,43 @@ func TestIntegerToWords(t *testing.T) {
 			result := integerToWords(tc.input)
 			if result != tc.expected {
 				t.Errorf("Expected %s, got %s", tc.expected, result)
+			}
+		})
+	}
+}
+
+func TestInvalidInputCases(t *testing.T) {
+	testCases := []interface{}{
+		true, false, struct{}{}, []int{1, 2, 3},
+	}
+
+	for _, input := range testCases {
+		t.Run(fmt.Sprintf("Invalid %v", input), func(t *testing.T) {
+			_, err := ToBengaliWord(input)
+			if err == nil {
+				t.Errorf("Expected error for input %v, got nil", input)
+			}
+		})
+	}
+}
+
+func TestConvertToFloat64EdgeCases(t *testing.T) {
+	testCases := []struct {
+		input    interface{}
+		hasError bool
+	}{
+		{uint(123), false},
+		{nil, true},
+		{true, true},
+		{false, true},
+		{complex(1, 2), true},
+	}
+
+	for _, tc := range testCases {
+		t.Run(fmt.Sprintf("Convert %v", tc.input), func(t *testing.T) {
+			_, err := convertToFloat64(tc.input)
+			if tc.hasError && err == nil {
+				t.Errorf("Expected error, got nil")
 			}
 		})
 	}

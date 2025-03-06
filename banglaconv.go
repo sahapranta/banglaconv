@@ -129,6 +129,10 @@ var numericWords = map[string]string{
 
 // ToBengaliNumber converts English numerals to Bengali numerals
 func ToBengaliNumber(numericText interface{}) string {
+	if numericText == nil {
+		return ""
+	}
+
 	str := fmt.Sprintf("%v", numericText)
 	return replaceDigits(str)
 }
@@ -139,7 +143,12 @@ func ToBengaliNumber(numericText interface{}) string {
  * Returns the Bengali word equivalent and an error if conversion fails.
  */
 func ToBengaliWord(number interface{}) (string, error) {
+	if number == nil || number == "" {
+		return "", nil
+	}
+
 	num, err := convertToFloat64(number)
+
 	if err != nil {
 		return "", err
 	}
@@ -149,9 +158,18 @@ func ToBengaliWord(number interface{}) (string, error) {
 	}
 
 	isFloat := num != math.Floor(num)
+
 	var fractionPart string
+
+	integerWords := ""
+
+	if num < 0 {
+		integerWords = "ঋণাত্মক "
+		num = num * -1 // Make num positive
+	}
+
 	integerPart := int(num)
-	integerWords := integerToWords(integerPart)
+	integerWords = integerWords + integerToWords(integerPart)
 
 	if isFloat {
 		fractionStr := fmt.Sprintf("%.10f", num)
@@ -195,6 +213,7 @@ func convertToFloat64(num interface{}) (float64, error) {
 
 func replaceDigits(str string) string {
 	result := ""
+	str = strings.TrimLeft(str, "0")
 	for _, char := range str {
 		if replacement, exists := digitMap[string(char)]; exists {
 			result += replacement
