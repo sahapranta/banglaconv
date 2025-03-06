@@ -129,8 +129,12 @@ var numericWords = map[string]string{
 
 // ToBengaliNumber converts English numerals to Bengali numerals
 func ToBengaliNumber(numericText interface{}) string {
-	if numericText == nil {
+	if numericText == nil || numericText == "" {
 		return ""
+	}
+
+	if numericText == "0" || numericText == 0 {
+		return "০"
 	}
 
 	str := fmt.Sprintf("%v", numericText)
